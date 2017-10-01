@@ -74,10 +74,14 @@ Rectangle {
 
                 Row {
                     anchors.right: novell_logo.right
+                    width: novell_logo.width
 
                     GridLayout {
+                        id: login_grid
                         columns: 2
                         rows: 2
+                        width: novell_logo.width
+
                         Text {
                             id: username_label
                             text: "Username:"
@@ -90,8 +94,10 @@ Rectangle {
                             font.pixelSize: 11
                             font.family: "monospace"
                             height: 20
-                            width: 385
                             focus: true
+                            anchors.left: username_label.right
+                            anchors.right: parent.right
+                            anchors.leftMargin: 3
                         }
 
                         Text {
@@ -106,6 +112,7 @@ Rectangle {
                             font.family: "monospace"
                             height: 20
                             width: user_entry.width
+                            anchors.right: parent.right
 
                             Keys.onPressed: {
                                 if (event.key === Qt.Key_Return || event.key === Qt.Key_Enter) {
