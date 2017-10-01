@@ -91,6 +91,7 @@ Rectangle {
                             font.family: "monospace"
                             height: 20
                             width: 385
+                            focus: true
                         }
 
                         Text {
