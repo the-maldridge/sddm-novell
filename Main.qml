@@ -23,7 +23,30 @@ Rectangle {
         visible: primaryScreen
 
         Rectangle {
+            // White part of the drop shadow
+            color: "#fff"
+            width: login_form.width
+            height: login_form.height
+            anchors.right: login_form.right
+            anchors.rightMargin: 1
+            anchors.bottom: login_form.bottom
+            anchors.bottomMargin: 1
+        }
+        
+        Rectangle {
+            // Black part of the drop shadow
+            color: "#000"
+            width: login_form.width + 1
+            height: login_form.height + 1
+            anchors.left: login_form.left
+            anchors.leftMargin: 1
+            anchors.top: login_form.top
+            anchors.topMargin: 1
+        }
+
+        Rectangle {
             // Login form
+            id: login_form
             width: childrenRect.width
             height: childrenRect.height
             color: "#ccc"
@@ -46,19 +69,18 @@ Rectangle {
                         source: "img/novell.png"
                     }
                     anchors.horizontalCenter: parent.horizontalCenter
-
                 }
                 Row {
-                    anchors.left: novell_logo.left
                     anchors.right: novell_logo.right
+                    
                     GridLayout {
-                        id: login_grid
                         columns: 2
                         rows: 2
-
                         Text {
+                            id: username_label
                             text: "Username:"
                             anchors.verticalCenter: user_entry.verticalCenter
+                            anchors.left: parent.left
                         }
 
                         TextBox {
@@ -66,26 +88,58 @@ Rectangle {
                             font.pixelSize: 11
                             font.family: "monospace"
                             height: 20
-                            anchors.right: parent.right
+                            width: 385
                         }
+
                         Text {
                             text: "Password:"
                             anchors.verticalCenter: pw_entry.verticalCenter
+                            anchors.left: username_label.left
                         }
-
+                        
                         PasswordBox {
                             id: pw_entry
                             font.pixelSize: 11
                             font.family: "monospace"
                             height: 20
-
+                            width: user_entry.width
+                            
                             Keys.onPressed: {
                                 if (event.key === Qt.Key_Return || event.key === Qt.Key_Enter) {
                                     sddm.login(user_entry.text, pw_entry.text)
                                     event.accepted = true
                                 }
                             }
+                            KeyNavigation.backtab: user_entry
+                            KeyNavigation.tab: ok_button
                         }
+                    }
+                }
+                RowLayout {
+                    spacing: 5
+                    id: button_row
+                    anchors.right: novell_logo.right
+                    Layout.bottomMargin: 5
+                    
+                    ImageButton {
+                        id: ok_button
+                        source: "img/ok.png"
+                        onClicked: sddm.login(user_entry.text, pw_entry.text)
+                        KeyNavigation.backtab: pw_entry
+                        KeyNavigation.tab: cancel_button
+                    }
+                    
+                    ImageButton {
+                        id: cancel_button
+                        source: "img/cancel.png"
+                        KeyNavigation.backtab: ok_button
+                        KeyNavigation.tab: advanced_button
+                    }
+                    
+                    ImageButton {
+                        id: advanced_button
+                        source: "img/advanced.png"
+                        KeyNavigation.backtab: cancel_button
                     }
                 }
             }
