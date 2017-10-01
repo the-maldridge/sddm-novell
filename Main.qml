@@ -1,4 +1,5 @@
 import QtQuick 2.0
+import QtQuick.Layouts 1.3
 import SddmComponents 2.0
 
 Rectangle {
@@ -23,12 +24,12 @@ Rectangle {
 
         Rectangle {
             // Login form
-            width: childrenRect.width + 5
-            height: childrenRect.height + 5
+            width: childrenRect.width
+            height: childrenRect.height
             color: "#ccc"
             anchors.centerIn: parent
 
-            Column {
+            ColumnLayout {
                 anchors.horizontalCenter: parent.horizontalCenter
                 Row {
                     Image {
@@ -36,32 +37,55 @@ Rectangle {
                         source: "img/bar.png"
                     }
                     anchors.horizontalCenter: parent.horizontalCenter
-                    
+
                 }
                 Row {
+                    id: novell_logo
                     Image {
                         // Box with the logo in it
                         source: "img/novell.png"
                     }
                     anchors.horizontalCenter: parent.horizontalCenter
-                    
+
                 }
                 Row {
-                    Text {
-                        text: "Username:"
-                    }
-                    
-                    TextBox {
-                        id: user_entry
-                    }
-                }
-                Row {
-                    Text {
-                        text: "Password:"
-                    }
-                    
-                    PasswordBox {
-                        id: pw_entry
+                    anchors.left: novell_logo.left
+                    anchors.right: novell_logo.right
+                    GridLayout {
+                        id: login_grid
+                        columns: 2
+                        rows: 2
+
+                        Text {
+                            text: "Username:"
+                            anchors.verticalCenter: user_entry.verticalCenter
+                        }
+
+                        TextBox {
+                            id: user_entry
+                            font.pixelSize: 11
+                            font.family: "monospace"
+                            height: 20
+                            anchors.right: parent.right
+                        }
+                        Text {
+                            text: "Password:"
+                            anchors.verticalCenter: pw_entry.verticalCenter
+                        }
+
+                        PasswordBox {
+                            id: pw_entry
+                            font.pixelSize: 11
+                            font.family: "monospace"
+                            height: 20
+
+                            Keys.onPressed: {
+                                if (event.key === Qt.Key_Return || event.key === Qt.Key_Enter) {
+                                    sddm.login(user_entry.text, pw_entry.text)
+                                    event.accepted = true
+                                }
+                            }
+                        }
                     }
                 }
             }
