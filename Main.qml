@@ -62,6 +62,7 @@ Rectangle {
                     anchors.horizontalCenter: parent.horizontalCenter
 
                 }
+
                 Row {
                     id: novell_logo
                     Image {
@@ -70,6 +71,7 @@ Rectangle {
                     }
                     anchors.horizontalCenter: parent.horizontalCenter
                 }
+
                 Row {
                     anchors.right: novell_logo.right
 
@@ -115,6 +117,7 @@ Rectangle {
                         }
                     }
                 }
+
                 RowLayout {
                     spacing: 5
                     id: button_row
@@ -180,10 +183,7 @@ Rectangle {
 
                         font.pixelSize: 11
                         font.family: "monospace"
-
-                        KeyNavigation.backtab: hibernate_button; KeyNavigation.tab: layoutBox
                     }
-
                 }
             }
         }
