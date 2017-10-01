@@ -32,7 +32,7 @@ Rectangle {
             anchors.bottom: login_form.bottom
             anchors.bottomMargin: 1
         }
-        
+
         Rectangle {
             // Black part of the drop shadow
             color: "#000"
@@ -72,7 +72,7 @@ Rectangle {
                 }
                 Row {
                     anchors.right: novell_logo.right
-                    
+
                     GridLayout {
                         columns: 2
                         rows: 2
@@ -96,14 +96,14 @@ Rectangle {
                             anchors.verticalCenter: pw_entry.verticalCenter
                             anchors.left: username_label.left
                         }
-                        
+
                         PasswordBox {
                             id: pw_entry
                             font.pixelSize: 11
                             font.family: "monospace"
                             height: 20
                             width: user_entry.width
-                            
+
                             Keys.onPressed: {
                                 if (event.key === Qt.Key_Return || event.key === Qt.Key_Enter) {
                                     sddm.login(user_entry.text, pw_entry.text)
@@ -120,27 +120,70 @@ Rectangle {
                     id: button_row
                     anchors.right: novell_logo.right
                     Layout.bottomMargin: 5
-                    
+
                     ImageButton {
                         id: ok_button
                         source: "img/ok.png"
-                        onClicked: sddm.login(user_entry.text, pw_entry.text)
                         KeyNavigation.backtab: pw_entry
                         KeyNavigation.tab: cancel_button
+                        opacity: 1
+
+                        onClicked: sddm.login(user_entry.text, pw_entry.text, session.index)
                     }
-                    
+
                     ImageButton {
                         id: cancel_button
                         source: "img/cancel.png"
                         KeyNavigation.backtab: ok_button
                         KeyNavigation.tab: advanced_button
+                        opacity: 1
+
+                        onClicked: cancel()
+
+                        function cancel() {
+                            user_entry.text = ""
+                            pw_entry.text = ""
+                        }
                     }
-                    
+
                     ImageButton {
                         id: advanced_button
                         source: "img/advanced.png"
                         KeyNavigation.backtab: cancel_button
+                        opacity: 1
+
+                        onClicked: toggle()
+
+                        function toggle() {
+                            if (advanced_panel.visible) advanced_panel.visible = false;
+                            else advanced_panel.visible = true;
+                        }
                     }
+                }
+
+                RowLayout {
+                    // This is the "advanced" row.  It contains things
+                    // that netware wouldn't have had and doesn't
+                    // necessarily use the correct styling, but it
+                    // tries to get close.
+                    id: advanced_panel
+                    visible: false
+
+                    Layout.margins: 5
+                    ComboBox {
+                        id: session
+                        width: 150
+                        height: 20
+
+                        model: sessionModel
+                        index: sessionModel.lastIndex
+
+                        font.pixelSize: 11
+                        font.family: "monospace"
+
+                        KeyNavigation.backtab: hibernate_button; KeyNavigation.tab: layoutBox
+                    }
+
                 }
             }
         }
