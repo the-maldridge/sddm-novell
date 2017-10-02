@@ -1,0 +1,9 @@
+[SddmGreeterTheme]
+Name=Novell
+Description=A reproduction of the classic Novell login screen
+License=MIT
+Type=sddm-theme
+Version=1.0
+MainScript=Main.qml
+Theme-Id=novell
+Theme-API=2.0
