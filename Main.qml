@@ -53,27 +53,28 @@ Rectangle {
             anchors.centerIn: parent
 
             ColumnLayout {
-                anchors.horizontalCenter: parent.horizontalCenter
+                Layout.alignment: Qt.AlignHCenter
+
                 Row {
+                    Layout.alignment: Qt.AlignHCenter
                     Image {
                         // Blue bar at the top of the "Windows Form"
                         source: "img/bar.png"
                     }
-                    anchors.horizontalCenter: parent.horizontalCenter
-
                 }
 
                 Row {
                     id: novell_logo
+                    Layout.alignment: Qt.AlignHCenter
                     Image {
                         // Box with the logo in it
                         source: "img/novell.png"
                     }
-                    anchors.horizontalCenter: parent.horizontalCenter
                 }
 
                 Row {
-                    anchors.right: novell_logo.right
+                    Layout.alignment: Qt.AlignRight
+                    Layout.rightMargin: 5
                     width: novell_logo.width
 
                     GridLayout {
@@ -85,8 +86,7 @@ Rectangle {
                         Text {
                             id: username_label
                             text: "Username:"
-                            anchors.verticalCenter: user_entry.verticalCenter
-                            anchors.left: parent.left
+                            Layout.alignment: Qt.AlignLeft
                         }
 
                         TextBox {
@@ -95,15 +95,13 @@ Rectangle {
                             font.family: "monospace"
                             height: 20
                             focus: true
-                            anchors.left: username_label.right
-                            anchors.right: parent.right
-                            anchors.leftMargin: 3
+                            Layout.alignment: Qt.AlignLeft
+                            Layout.fillWidth: true
                         }
 
                         Text {
                             text: "Password:"
-                            anchors.verticalCenter: pw_entry.verticalCenter
-                            anchors.left: username_label.left
+                            Layout.alignment: Qt.AlignLeft
                         }
 
                         PasswordBox {
@@ -111,8 +109,8 @@ Rectangle {
                             font.pixelSize: 11
                             font.family: "monospace"
                             height: 20
-                            width: user_entry.width
-                            anchors.right: parent.right
+                            Layout.alignment: Qt.AlignLeft
+                            Layout.fillWidth: true
 
                             Keys.onPressed: {
                                 if (event.key === Qt.Key_Return || event.key === Qt.Key_Enter) {
@@ -129,8 +127,9 @@ Rectangle {
                 RowLayout {
                     spacing: 5
                     id: button_row
-                    anchors.right: novell_logo.right
+                    Layout.alignment: Qt.AlignRight
                     Layout.bottomMargin: 5
+                    Layout.rightMargin: 5
 
                     ImageButton {
                         id: ok_button
